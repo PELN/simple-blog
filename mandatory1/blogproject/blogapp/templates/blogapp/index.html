@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Blog app</title>
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+    body{
+       padding: 2%;
+    }
+
+    #createPost{
+        width: 600px;
+        /* border: 2px solid red; */
+    }
+    .blogSection{
+        width: 600px;
+        padding: 20px;
+        box-shadow: 5px 10px 18px #888888:
+    }
+    button{
+        background-color: #007bff!important;
+        color: white!important;
+    }
+    </style>
+</head>
+<body>
+    <h1>Blog App</h1>
+        <p>{{ blog.user }}</p>
+    <hr>
+    <a href="{% url 'loginapp:logout' %}">LOGOUT</a>
+    <hr>
+    <!-- reference to the context -> todos in views.py -->
+        <!-- for loop for todos, and every item will be called todo -->
+        {% for blog in blogs %}
+            <div class="blogSection">
+                <div id="blogDate">Posted: {{ blog.date }}</div>
+                <!-- click on url should go to details page and pass primary key along with it -->
+                <div id="blogTitle"><h4>{{ blog.title }}</h4></div>
+                <div id="blogPost">{{ blog.post }}</div>
+                <a href="{% url 'blogapp:details' blog.pk %}">EDIT</a>
+                <hr>
+            </div>
+        {% endfor %}
+    <hr>
+
+    <form action="." method="POST">
+        <div id="createPost">
+            <div class="form-group">
+                {% csrf_token %}
+                <label for="title">Blog title</label><br>
+                <input id="title" name="title" type="text" placeholder="Title" class="form-control"><br>
+                <label for="post">Blog post</label><br>
+                <textarea id="post" name="post" class="form-control">{{ blog.post }}</textarea><br>
+                <button class="form-control">Submit</button>
+            </div>
+        </div>
+    </form>
+    
+</body>
+</html>

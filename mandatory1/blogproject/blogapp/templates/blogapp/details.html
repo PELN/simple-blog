@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Blog</title>
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+    body{
+       padding: 2%;
+    }
+
+    .form-control{
+        width: 600px;
+    }
+    button{
+        background-color: #007bff!important;
+        color: white!important;
+    }
+    </style>
+</head>
+<body>
+    <h1>Edit blogpost</h1>
+        <p>User logged in: {{ blog.user }}</p>
+        
+    <!-- dot as action sends it back to ouselves?? -->
+    <form action="{% url 'blogapp:details' blog.pk %}" method="POST">
+        <!-- prevent js injection and cross script attacks with csrf_token-->
+        {% csrf_token %}
+            <label for="title">Title</label>
+            <!-- todo.title comes from the contect in views.py, whatever is in the dictionary is available for the template  -->
+            <input id="title" name="title" type="text" placeholder="Title" value="{{ blog.title }}" class="form-control"><br>
+            <label for="post">Post</label><br>
+            <textarea id="post" name="post" class="form-control">{{ blog.post }}</textarea><br>
+            <button class="form-control">Submit</button>
+    </form>
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+    body{
+       padding: 2%;
+    }
+
+    .form-control{
+        width: 400px;
+    }
+    button{
+        background-color: #007bff!important;
+        color: white!important;
+    }
+    </style>
+</head>
+<body>
+    <h1>Login</h1>
+
+    <form action="." method="POST">
+        {% comment %} makes sure the token is resubmitted when something is posted, to prevent cross site scripting {% endcomment %}
+        {% csrf_token %}
+        <label for="user">Username</label>
+        <input type="text" name="user" id="user" placehoder="Username" class="form-control">
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" placehoder="Password" class="form-control">
+        <input type="submit" value="Submit" class="form-control">
+    </form>
+
+    
+    {% comment %} error message if username/password is wrong, get it from views  {% endcomment %}
+    {% if error %} 
+        <p class="error"> {{ error }} </p> 
+        <p><a href="{% url 'loginapp:password_reset' %}">Reset password</a></p>
+    {% endif %}
+    
+    <a href="{% url 'loginapp:signup' %}">Sign up here</a>
+</body>
+</html>
